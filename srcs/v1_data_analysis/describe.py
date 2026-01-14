@@ -15,6 +15,12 @@ def main():
     
     filename = sys.argv[1]
 
+    if not filename.lower().endswith('.csv'):
+        error("File needs a .csv extension")
+        sys.exit(1)
+
+    # print("CHANGES")
+
     try:
         df = pd.read_csv(filename)
     except FileNotFoundError:
