@@ -1,9 +1,31 @@
+# Replicating describe() behavior
+#   count, mean, standard deviation, min, Q1, median, Q3, max
+
 import pandas as pd
 import sys 
 from colorama import Fore, Style, init
 
 # colorama init
 init() 
+
+# store everyhting in a dict 
+
+# def count():
+#     # number of elements of the var
+
+# def mean():
+#     # sum all values / count
+
+# def standard_deviation():
+#     # sqrt(sum(x - mean)^2) / (n - 1)
+
+# def min_max():
+#     # iterate through all values and store -> return a dict
+
+# def q1_q2_q3():
+#     # sort and then find values at positions
+
+
 
 def error(msg):
     print(Fore.RED + "Error: " + Style.RESET_ALL, msg)
@@ -39,7 +61,7 @@ def main():
         error(str(e))
         sys.exit(1)
 
-    df_numeric = df.select_dtypes(include=["number"])
+    df_numeric = df.select_dtypes(include=["number"]).dropna(axis=1, how="all")
 
     print(df_numeric.head())
     print(df_numeric.shape)
