@@ -21,7 +21,14 @@ def main():
         error("File does not exist.")
     except PermissionError:
         error("File could not be opened.")
-    except OSError as e:
-        error(str(e))
     except pd.errors.EmptyDataError:
         error("File is empty.")
+    except pd.errors.ParserError:
+        error("Invalid CSV format.")
+    except OSError as e:
+        error(str(e))
+
+    df_numeric = df.select_dtypes(include=["number"])
+
+    print(df_numeric.head())
+    print(df_numeric.shape())

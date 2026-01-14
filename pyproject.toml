@@ -6,16 +6,26 @@ authors = [
     {name = "margauuuuuxx",email = "margaux.loncour@gmail.com"}
 ]
 readme = "README.md"
-requires-python = ">=3.14"
+requires-python = ">=3.10,<3.12"
 dependencies = [
     "pandas (>=2.3.3,<3.0.0)",
     "colorama (>=0.4.6,<0.5.0)"
 ]
 
-[tool.poetry]
-package-mode = false
+[tool.poetry.scripts]
+describe = "srcs.v1_data_analysis.describe:main"
+# histogram = "srcs.v2_data_visualization.histogram:main"
+# pair_plot = "srcs.v2_data_visualization.pair_plot:main"
+# scatter_plot = "srcs.v2_data_visualization.scatter_plot:main"
 
-[tool.poetry.dependencies]
+[[tool.poetry.packages]]
+include = "srcs/v1_data_analysis"
+
+#[[tool.poetry.packages]]
+#include = "srcs/v1_data_visualization"
+
+#[[tool.poetry.packages]]
+#include = "srcs/v3_logreg"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]

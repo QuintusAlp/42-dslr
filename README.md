@@ -9,3 +9,4 @@ Poetry usage:
 
 adding dependencies: poetry add <dependency>
 removing dependences: poetry remove <dependency>
+making poetry use a supported version of python: poetry env use pyhton3.11
