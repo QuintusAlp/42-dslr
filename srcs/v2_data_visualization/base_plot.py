@@ -8,6 +8,14 @@ from srcs.v1_data_analysis.exceptions import FileValidationError, DataProcessing
 class BasePlot(ABC):
     """Base class for all visualizations plots"""
 
+    HOUSES = ['Gryffindor', 'Hufflepuff', 'Ravenclaw', 'Slytherin']
+    HOUSES_COLORS = {
+        "Gryffindor": "red",
+        "Hufflepuff": "yellow",
+        "Ravenclaw": "blue",
+        "Slytherin": "green"
+    }
+
     def run(self):
         """Main execution flow, shared across all plots"""
         try: 
