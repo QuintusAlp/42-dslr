@@ -1,5 +1,16 @@
+import pandas as pd
 import matplotlib.pyplot as plt
-from srcs.v1_data_analysis.exceptions import * 
-from srcs.v1_data_analysis.describe import validate_arguments, error
-from srcs.v1_data_analysis.csv_loader import validate_csv
+from .base_plot import BasePlot
 
+class HistogramPlot(BasePlot):
+
+    def prepare_data(self, df: pd.DataFrame):
+        """"Histogram-specific data preparation"""
+
+    def plot(self, df: pd.DataFrame):
+        """"Histogram-specific plotting"""
+
+def main():
+    histogram = HistogramPlot()
+    histogram.run()
+    
