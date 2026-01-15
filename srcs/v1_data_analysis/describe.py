@@ -6,7 +6,7 @@ import pandas as pd
 from colorama import Fore, Style, init
 from pprint import pprint
 from .csv_loader import validate_csv
-from .exceptions import FileValidationError, DataDescribeError, DataProcessingError
+from .exceptions import FileValidationError, DataProcessingError
 from .statistics import compute_stats
 
 # colorama init

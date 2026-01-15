@@ -1,7 +1,7 @@
 import pandas as pd
 from .exceptions import FileValidationError
 
-def validate_csv(filename: str) -> pd.DataFrame :
+def validate_csv(filename: str) -> pd.DataFrame:
     if not filename.lower().endswith('.csv'):
         raise FileValidationError("File needs a .csv extension.")
 
