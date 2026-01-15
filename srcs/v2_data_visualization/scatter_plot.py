@@ -1,6 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-from spicy.stats import f_oneway
+from scipy.stats import f_oneway
 from .base_plot import BasePlot
 
 # only render scatter plots where houses dont't overlap -> heterogenous
