@@ -24,6 +24,11 @@ class ScatterPlot(BasePlot):
     def prepare_data(self, df: pd.DataFrame):
         """"Scatter plot specific data preparation"""
 
+        df_numeric = df.select_dtypes(include=["number"]).dropna(axis=1, how="all")
+        df_filtered = df_numeric.drop(columns=["Index"], errors='ignore')
+        
+        
+
     def plot(self, df: pd.DataFrame):
         """"Scatter plot specific plotting"""
 

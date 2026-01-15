@@ -6,6 +6,7 @@ class HistogramPlot(BasePlot):
 
     def prepare_data(self, df: pd.DataFrame):
         """"Histogram-specific data preparation"""
+        
         cols_to_drop = ['Index', 'First Name', 'Last Name', 'Birthday', 'Best Hand']
         df_filtered = df.drop(columns=cols_to_drop, errors='ignore')
         df_filtered = df_filtered[df_filtered['Hogwarts House'].notna()] # keep only rows where a specific col is not missing
@@ -13,6 +14,7 @@ class HistogramPlot(BasePlot):
 
     def plot(self, df_filtered):
         """"Histogram-specific plotting"""
+        
         course_cols = df_filtered.select_dtypes(include=['number']).columns.tolist()
 
         n_courses = len(course_cols)
