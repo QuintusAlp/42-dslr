@@ -5,6 +5,7 @@ import pandas as pd
 import sys 
 import math
 from colorama import Fore, Style, init
+from pprint import pprint
 
 # colorama init
 init() 
@@ -20,8 +21,10 @@ def compute_mean(values: list, count: int) -> float:
 
     # sqrt(sum(x - mean)^2) / (n - 1)
 def compute_standard_deviation(values: list, mean: float, count: int) -> float:
-    for x in values:
-        variance = sum((x - mean) ** 2 / count - 1)
+    if (count < 2):
+        return (0.0)
+        
+    variance = sum((x - mean) ** 2 for x in values) / (count - 1)
     return (math.sqrt(variance))
 
 def compute_extrema(values: list) -> dict[str, float]:
@@ -100,13 +103,21 @@ def main():
         sys.exit(1)
 
     df_numeric = df.select_dtypes(include=["number"]).dropna(axis=1, how="all")
+    df_filtered = df_numeric.drop(columns=["Index"])
 
-    print(df_numeric.head())
-    print(df_numeric.shape)
+    # print(df_numeric.head())
+    # print(df_numeric.shape)
 
     data = {}
 
-    for col in df_numeric.columns:
-        numeric_values = df_numeric[col].dropna().tolist()
+    for col in df_filtered.columns:
+        numeric_values = df_filtered[col].dropna().tolist()
         stats_dict = compute_stats(numeric_values)
         data[col] = stats_dict
+    
+    pprint(data, sort_dicts=False)
+
+    # print()
+    # print("***** DESCRIBE OUTPUT *****")
+    # describe_stats = df_filtered.describe()
+    # print(describe_stats)
