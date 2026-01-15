@@ -27,27 +27,37 @@ class HistogramPlot(BasePlot):
             "Slytherin": "green"
         }
 
-        fig, axes = plt.subplots(n_rows, n_cols, figsize=(20, 5 * n_rows))
+        fig, axes = plt.subplots(n_rows, n_cols, figsize=(12, 3 * n_rows))
         axes = axes.flatten()
 
         for i, course in enumerate(course_cols):
             ax = axes[i]
-
+            
+            house_datasets = []
+            labels = []
+            colors = []
+            
             for house in houses:
                 house_data = df_filtered[df_filtered['Hogwarts House'] == house][course].dropna()
-                ax.hist(house_data, 
-                        bins=20, 
-                        density=True,
-                        alpha=0.7,
-                        color=house_colors[house],
-                        label=house,
+                if len(house_data) > 0:
+                    house_datasets.append(house_data.values)
+                    labels.append(house)
+                    colors.append(house_colors[house])
+            
+            if house_datasets:
+                ax.hist(house_datasets,
+                        bins=20,
+                        alpha=0.6,
+                        color=colors,
+                        label=labels,
                         edgecolor='black',
                         linewidth=0.5)
             
-            ax.set_title(f'{course}', fontsize=12, fontweight='bold')
-            ax.set_xlabel('Score')
-            ax.set_ylabel('Frequency')
-            ax.legend()
+            ax.set_title(f'{course}', fontsize=10, fontweight='bold')
+            ax.set_xlabel('Score', fontsize=8)
+            ax.set_ylabel('Count', fontsize=8)
+            ax.legend(fontsize=7, loc='best')
+            ax.grid(True, alpha=0.3)
         
         for j in range(i + 1, len(axes)):
             axes[j].set_visible(False)
