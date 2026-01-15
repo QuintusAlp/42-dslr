@@ -13,12 +13,19 @@ class HistogramPlot(BasePlot):
 
     def plot(self, df_filtered):
         """"Histogram-specific plotting"""
-        houses = df_filtered['Hogwarts House'].unique()
+        houses = sorted(df_filtered['Hogwarts House'].unique())
         course_cols = df_filtered.select_dtypes(include=['number']).columns.tolist()
 
         n_courses = len(course_cols)
         n_cols = 4
         n_rows = (n_courses + n_cols - 1) // n_cols
+
+        house_colors = {
+            "Gryffindor": "red",
+            "Hufflepuff": "yellow",
+            "Ravenclaw": "blue",
+            "Slytherin": "green"
+        }
 
         fig, axes = plt.subplots(n_rows, n_cols, figsize=(20, 5 * n_rows))
         axes = axes.flatten()
@@ -28,9 +35,16 @@ class HistogramPlot(BasePlot):
 
             for house in houses:
                 house_data = df_filtered[df_filtered['Hogwarts House'] == house][course].dropna()
-                ax.hist(house_data, bins=20, alpha=0.5, label=house)
+                ax.hist(house_data, 
+                        bins=20, 
+                        density=True,
+                        alpha=0.7,
+                        color=house_colors[house],
+                        label=house,
+                        edgecolor='black',
+                        linewidth=0.5)
             
-            ax.set_title(course)
+            ax.set_title(f'{course}', fontsize=12, fontweight='bold')
             ax.set_xlabel('Score')
             ax.set_ylabel('Frequency')
             ax.legend()
