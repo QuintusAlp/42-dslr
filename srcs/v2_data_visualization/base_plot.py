@@ -1,8 +1,8 @@
 import sys
 import pandas as pd
 from abc import ABC, abstractmethod
-from srcs.v1_data_analysis import validate_arguments
-from srcs.v1_data_analysis.csv_loader import validate_csv, error 
+from srcs.v1_data_analysis.describe import validate_arguments, error
+from srcs.v1_data_analysis.csv_loader import validate_csv
 from srcs.v1_data_analysis.exceptions import FileValidationError, DataProcessingError
 
 class BasePlot(ABC):
