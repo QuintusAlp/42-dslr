@@ -10,16 +10,13 @@ from pprint import pprint
 # colorama init
 init() 
 
-# store everyhting in a dict 
-
 def compute_count(values: list) -> int:
     return (len(values))
 
-    # sum all values / count
 def compute_mean(values: list, count: int) -> float:
     return (sum(values) / count)
 
-    # sqrt(sum(x - mean)^2) / (n - 1)
+# sqrt(sum(x - mean)^2) / (n - 1)
 def compute_standard_deviation(values: list, mean: float, count: int) -> float:
     if (count < 2):
         return (0.0)
