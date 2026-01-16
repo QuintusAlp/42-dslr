@@ -72,6 +72,10 @@ class ScatterPlot(BasePlot):
                     ax.set_xlabel(x_feature)
                     ax.set_ylabel(y_feature)
 
+            # Hiding empty axes if nbr of plots in the fig / nbr of plots per fig
+            for j in range(len(batch), len(axes)):
+                axes[j].set_visible(False)
+
             plt.tight_layout()
             plt.show()
 
