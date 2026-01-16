@@ -2,7 +2,6 @@ import math
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
-from scipy.stats import f_oneway
 from itertools import combinations, islice
 from .base_plot import BasePlot
 
@@ -14,7 +13,7 @@ from .base_plot import BasePlot
 class ScatterPlot(BasePlot):
 
     def prepare_data(self, df: pd.DataFrame):
-        """"Scatter plot specific data preparation"""
+        """Scatter plot specific data preparation"""
 
         cols_to_drop = ['Index', 'First Name', 'Last Name', 'Birthday', 'Best Hand']
         df_filtered = df.drop(columns=cols_to_drop, errors='ignore')
@@ -23,14 +22,18 @@ class ScatterPlot(BasePlot):
         
     def make_batches(self, items, size):
         it = iter(items)
+        batches = []
+        
         while True:
             batch = list(islice(it, size))
             if not batch:
                 break
-            yield batch #like a return but resume to where it was when function is called again -> pauses fct
+            batches.append(batch)
+
+        return (batches)
 
     def plot(self, df_filtered):
-        """"Scatter plot specific plotting"""
+        """Scatter plot specific plotting"""
 
         df_numeric = df_filtered.select_dtypes(include=['number'])
         courses = df_numeric.columns.tolist()
