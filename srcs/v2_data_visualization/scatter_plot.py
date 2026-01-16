@@ -48,13 +48,13 @@ class ScatterPlot(BasePlot):
 
         for batch in pairs_batches:
             # fig = the entire figure ; ax = array that holds each individual subplot 
-            fig, axes = plt.subplots(3, 4, figsize=(12, 9))
+            fig, axes = plt.subplots(3, 4, figsize=(16, 12))
             axes = axes.flatten()
 
             # i is the # of pairs (= 12)
             for i, pair in enumerate(batch):
+                ax = axes[i]
                 for house in self.HOUSES:
-                    ax = axes[i]
                     x_feature = pair[0]
                     y_feature = pair[1]
 
@@ -68,7 +68,7 @@ class ScatterPlot(BasePlot):
                                 alpha=0.6,
                                 label=house)
                     
-                    ax.set_title(x_feature + " VS " + y_feature)
+                    ax.set_title(x_feature + " VS " + y_feature, fontsize=10)
                     ax.set_xlabel(x_feature)
                     ax.set_ylabel(y_feature)
 
@@ -76,7 +76,16 @@ class ScatterPlot(BasePlot):
             for j in range(len(batch), len(axes)):
                 axes[j].set_visible(False)
 
+            # Adding one legend per figure
+            handles, labels = axes[0].get_legend_handles_labels()
+            fig.legend(handles, labels,
+                       loc='upper center',
+                       ncol=len(self.HOUSES),
+                       fontsize=10)
+
             plt.tight_layout()
+            # Leaving space for legend
+            plt.subplots_adjust(top=0.93)
             plt.show()
 
 
