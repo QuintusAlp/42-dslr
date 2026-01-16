@@ -4,9 +4,12 @@ import numpy as np
 from scipy.stats import f_oneway
 from .base_plot import BasePlot
 
-# scatter plots are used to show the relationship between 2 vars:
+# scatter plots are used to show the relationship between 2 numeric vars:
 #   ex: study hours VS test scores
+# here we use a categorical third variable for the houses
 # only render scatter plots where houses dont't overlap -> heterogenous
+
+# can transform bday in age and then do mean of all scores and do age vs notes
 
 class ScatterPlot(BasePlot):
 
@@ -27,29 +30,49 @@ class ScatterPlot(BasePlot):
     def prepare_data(self, df: pd.DataFrame):
         """"Scatter plot specific data preparation"""
 
-        df_numeric = df.select_dtypes(include=["number"]).dropna(axis=1, how="all")
-        df_filtered = df_numeric.drop(columns=["Index"], errors='ignore')
-        
+        cols_to_drop = ['Index', 'First Name', 'Last Name', 'Birthday', 'Best Hand']
+        df_filtered = df.drop(columns=cols_to_drop, errors='ignore')
+        df_filtered = df_filtered[df_filtered['Hogwarts House'].notna()] #removes rows with missing house
+        return (df_filtered)
         
 
-    def plot(self, df: pd.DataFrame):
+    def plot(self, df_filtered):
         """"Scatter plot specific plotting"""
 
-        x1 = np.array([]) # making is an np array because it permits more things with the data and matplotlib is optimized for numpy
-        y1 = np.arrau([])
+        df_numeric = df_filtered.select_dtypes(include=['number'])
+        courses = df_numeric.columns.tolist()
+        n_courses = len(courses)
+        
+        print(n_courses)
 
-        x2 = np.array([])
-        y2 = np.array([])
+        # number of plots = nbr of possible combinations
+        # (n * (n-1)) / 2
 
-        # x = vars list of the x-axis
-        plt.scatter(x, y, color="", alpha = 0.5,
-                    )
+        for i in range(n_courses):
+            for j in range(i + 1, n_courses):
+                x_feature = courses[i]
+                y_feature = courses[j]
+                
+                plt.figure()
 
-        plt.title("Graph title")
-        plt.xlabel("x vars name")
-        plt.ylabel("y vars name")
+                for house in self.HOUSES:
+                    mask = df_filtered['Hogwarts House'] == house
+                    mask &= df_filtered[x_feature].notna() & df_filtered[y_feature].notna()
+                    house_x_data = df_filtered.loc[mask, x_feature]
+                    house_y_data = df_filtered.loc[mask, y_feature]
+                    plt.scatter(house_x_data, house_y_data,
+                                color=self.HOUSES_COLORS[house],
+                                alpha=0.6,
+                                label=house)
+                
+                plt.title(x_feature + " VS " + y_feature)
+                plt.xlabel(x_feature)
+                plt.ylabel(y_feature)
+                plt.legend()
 
-        plt.show()
+                plt.tight_layout()
+                plt.show()
+
 
 def main():
     scatter_plot = ScatterPlot()
