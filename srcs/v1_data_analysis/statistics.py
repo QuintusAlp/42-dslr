@@ -8,8 +8,7 @@ def compute_count(values: list) -> int:
 def compute_mean(values: list, count: int) -> float:
     return (sum(values) / count)
 
-# sqrt(sum(x - mean)^2) / (n - 1)
-def compute_standard_deviation(values: list, mean: float, count: int) -> float:
+def compute_variance(values: list, mean: float, count: int) -> float:
     if (count < 2):
         return float('nan')
         
@@ -17,9 +16,13 @@ def compute_standard_deviation(values: list, mean: float, count: int) -> float:
     if variance < 0:
         raise DataProcessingError("Negative variance.")
     
+    return (variance)
+
+# sqrt(sum(x - mean)^2) / (n - 1)
+def compute_standard_deviation(values: list, mean: float, count: int, variance: float) -> float:
     return (math.sqrt(variance))
 
-def compute_extrema(values: list) -> dict[str, float]:
+def compute_extrema(values: list) -> dict[str, Union[int, float]]:
     return {
         "min": values[0],
         "max": values[len(values) - 1]
@@ -42,7 +45,10 @@ def compute_percentiles(values: list, count: int) -> dict[str, Union[int, float]
         "q3": get_percentile(75)
     }
 
-def compute_stats(values: list) -> dict[str, Union[int, float]]:
+def compute_range(min: Union[int, float], max: Union[int, float]) -> Union[int, float]:
+    return (max - min)
+
+def compute_stats(values: list, bonus: bool = False) -> dict[str, Union[int, float]]:
     if not values:
         raise DataProcessingError("Cannot compute statistics on empty dataset")
     
@@ -51,14 +57,23 @@ def compute_stats(values: list) -> dict[str, Union[int, float]]:
     sorted_values = sorted(values)
     min_max = compute_extrema(sorted_values)
     percentiles = compute_percentiles(sorted_values, count)
+    variance = compute_variance(values, mean, count)
 
-    return {
+    stats = {
         "count": count,
         "mean": mean,
-        "std": compute_standard_deviation(values, mean, count),
+        "std": compute_standard_deviation(values, mean, count, variance),
         "min": min_max["min"],
         "25%": percentiles["q1"],
         "50%": percentiles["q2"],
         "75%": percentiles["q3"],
         "max": min_max["max"],
     }
+
+    if bonus:
+        stats.update({
+            "variance": variance,
+            "range": compute_range(min_max["min"], min_max["max"])
+        })
+
+    return (stats)

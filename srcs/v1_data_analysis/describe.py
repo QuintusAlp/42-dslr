@@ -29,7 +29,7 @@ def prepare_data(df: pd.DataFrame) -> pd.DataFrame:
     
     return (df_filtered)
 
-def main():
+def main(bonus: bool = False):
     try:
         filename = validate_arguments()
         df = validate_csv(filename)
@@ -40,7 +40,7 @@ def main():
             numeric_values = df_filtered[col].dropna().tolist()
             if not numeric_values:
                 continue
-            stats_dict = compute_stats(numeric_values)
+            stats_dict = compute_stats(numeric_values, bonus=bonus)
             data[col] = stats_dict
         if not data:
             raise DataProcessingError("No valid data to analyze.")
@@ -59,6 +59,8 @@ def main():
         error(f"Unexpected error: {str(e)}")
         sys.exit(2)
 
+def main_bonus():
+    main(bonus=True)
 
 if __name__ == "__main__":
     main()

@@ -16,6 +16,7 @@ dependencies = [
 
 [tool.poetry.scripts]
 describe = "srcs.v1_data_analysis.describe:main"
+describe_bonus = "srcs.v1_data_analysis.describe:main_bonus"
 histogram = "srcs.v2_data_visualization.histogram:main"
 pair_plot = "srcs.v2_data_visualization.pair_plot:main"
 scatter_plot = "srcs.v2_data_visualization.scatter_plot:main"
