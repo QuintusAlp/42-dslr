@@ -4,27 +4,17 @@ from .base_plot import BasePlot
 
 class HistogramPlot(BasePlot):
 
-    def prepare_data(self, df: pd.DataFrame):
-        """"Histogram-specific data preparation"""
-        
-        cols_to_drop = ['Index', 'First Name', 'Last Name', 'Birthday', 'Best Hand']
-        df_filtered = df.drop(columns=cols_to_drop, errors='ignore')
-        df_filtered = df_filtered[df_filtered['Hogwarts House'].notna()] # keep only rows where a specific col is not missing
-        return (df_filtered)
-
-    def plot(self, df_filtered):
+    def plot(self, df_filtered, df_numeric, courses):
         """"Histogram-specific plotting"""
         
-        course_cols = df_filtered.select_dtypes(include=['number']).columns.tolist()
-
-        n_courses = len(course_cols)
+        n_courses = len(courses)
         n_cols = 4
         n_rows = (n_courses + n_cols - 1) // n_cols
 
         fig, axes = plt.subplots(n_rows, n_cols, figsize=(12, 3 * n_rows))
         axes = axes.flatten()
 
-        for i, course in enumerate(course_cols):
+        for i, course in enumerate(courses):
             ax = axes[i]
             
             house_datasets = []
@@ -56,8 +46,7 @@ class HistogramPlot(BasePlot):
         for j in range(i + 1, len(axes)):
             axes[j].set_visible(False)
         
-        plt.tight_layout()
-        plt.show()
+        self.save_file("histogram.png")
 
 def main():
     histogram = HistogramPlot()

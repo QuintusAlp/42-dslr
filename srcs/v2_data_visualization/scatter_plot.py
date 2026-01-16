@@ -9,14 +9,6 @@ from .base_plot import BasePlot
 # only render scatter plots where houses dont't overlap -> heterogenous
 
 class ScatterPlot(BasePlot):
-
-    def prepare_data(self, df: pd.DataFrame):
-        """Scatter plot specific data preparation"""
-
-        cols_to_drop = ['Index', 'First Name', 'Last Name', 'Birthday', 'Best Hand']
-        df_filtered = df.drop(columns=cols_to_drop, errors='ignore')
-        df_filtered = df_filtered[df_filtered['Hogwarts House'].notna()] #removes rows with missing house
-        return (df_filtered)
         
     def make_batches(self, items, size):
         batches = []
@@ -26,12 +18,9 @@ class ScatterPlot(BasePlot):
         
         return (batches)
 
-    def plot(self, df_filtered):
+    def plot(self, df_filtered, df_numeric, courses):
         """Scatter plot specific plotting"""
 
-        df_numeric = df_filtered.select_dtypes(include=['number'])
-        courses = df_numeric.columns.tolist()
-        
         plots_per_figure = 12 
 
         # Extracting every possible course combinations        
@@ -40,11 +29,10 @@ class ScatterPlot(BasePlot):
         pairs = list(combinations(courses, 2))
         pairs_batches = self.make_batches(pairs, plots_per_figure)
 
-        for batch in pairs_batches:
+        for batch_idx, batch in enumerate(pairs_batches):
             # fig = the entire figure ; ax = array that holds each individual subplot 
             fig, axes = plt.subplots(3, 4, figsize=(14, 10))
             axes = axes.flatten()
-
             
             # i is the # of pairs (= 12)
             for i, pair in enumerate(batch):
@@ -84,7 +72,7 @@ class ScatterPlot(BasePlot):
             # Leaving space for legend
             plt.subplots_adjust(top=0.93)
 
-        plt.show()
+            self.save_file(f"scatter_plot{batch_idx + 1}.png")
 
 
 def main():
