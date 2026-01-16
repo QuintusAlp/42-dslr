@@ -36,6 +36,8 @@ class ScatterPlot(BasePlot):
         courses = df_numeric.columns.tolist()
         n_courses = len(courses)
         
+        figures = []
+
         # number of plots = nbr of possible combinations
         # (n * (n-1)) / 2
         n_plots = (n_courses * (n_courses - 1)) / 2
@@ -48,7 +50,7 @@ class ScatterPlot(BasePlot):
 
         for batch in pairs_batches:
             # fig = the entire figure ; ax = array that holds each individual subplot 
-            fig, axes = plt.subplots(3, 4, figsize=(16, 12))
+            fig, axes = plt.subplots(3, 4, figsize=(14, 10))
             axes = axes.flatten()
 
             # i is the # of pairs (= 12)
@@ -71,6 +73,8 @@ class ScatterPlot(BasePlot):
                     ax.set_title(x_feature + " VS " + y_feature, fontsize=10)
                     ax.set_xlabel(x_feature)
                     ax.set_ylabel(y_feature)
+                    # Reducing the size of the values of the graduated axis
+                    ax.tick_params(axis='both', which='major', labelsize=8)
 
             # Hiding empty axes if nbr of plots in the fig / nbr of plots per fig
             for j in range(len(batch), len(axes)):
@@ -86,7 +90,9 @@ class ScatterPlot(BasePlot):
             plt.tight_layout()
             # Leaving space for legend
             plt.subplots_adjust(top=0.93)
-            plt.show()
+            figures.append(fig)
+
+        plt.show(block=True)
 
 
 def main():
