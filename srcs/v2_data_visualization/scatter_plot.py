@@ -1,7 +1,5 @@
-import math
 import pandas as pd
 import matplotlib.pyplot as plt
-import numpy as np
 from itertools import combinations, islice
 from .base_plot import BasePlot
 
@@ -21,15 +19,11 @@ class ScatterPlot(BasePlot):
         return (df_filtered)
         
     def make_batches(self, items, size):
-        it = iter(items)
         batches = []
-        
-        while True:
-            batch = list(islice(it, size))
-            if not batch:
-                break
-            batches.append(batch)
 
+        for i in range(0, len(items), size):
+            batches.append(items[i:i + size])
+        
         return (batches)
 
     def plot(self, df_filtered):
@@ -37,32 +31,28 @@ class ScatterPlot(BasePlot):
 
         df_numeric = df_filtered.select_dtypes(include=['number'])
         courses = df_numeric.columns.tolist()
-        n_courses = len(courses)
         
-        figures = []
-
-        # number of plots = nbr of possible combinations
-        # (n * (n-1)) / 2
-        n_plots = (n_courses * (n_courses - 1)) / 2
         plots_per_figure = 12 
-        n_figures = math.ceil(n_plots / plots_per_figure)
 
         # Extracting every possible course combinations        
+        # number of plots = nbr of possible combinations
+        # (n * (n-1)) / 2
         pairs = list(combinations(courses, 2))
-        pairs_batches = list(self.make_batches(pairs, plots_per_figure))
+        pairs_batches = self.make_batches(pairs, plots_per_figure)
 
         for batch in pairs_batches:
             # fig = the entire figure ; ax = array that holds each individual subplot 
             fig, axes = plt.subplots(3, 4, figsize=(14, 10))
             axes = axes.flatten()
 
+            
             # i is the # of pairs (= 12)
             for i, pair in enumerate(batch):
                 ax = axes[i]
-                for house in self.HOUSES:
-                    x_feature = pair[0]
-                    y_feature = pair[1]
+                x_feature = pair[0]
+                y_feature = pair[1]
 
+                for house in self.HOUSES:
                     mask = df_filtered['Hogwarts House'] == house
                     mask &= df_filtered[x_feature].notna() & df_filtered[y_feature].notna()
                     house_x_data = df_filtered.loc[mask, x_feature]
@@ -73,11 +63,11 @@ class ScatterPlot(BasePlot):
                                 alpha=0.6,
                                 label=house)
                     
-                    ax.set_title(x_feature + " VS " + y_feature, fontsize=10)
-                    ax.set_xlabel(x_feature)
-                    ax.set_ylabel(y_feature)
-                    # Reducing the size of the values of the graduated axis
-                    ax.tick_params(axis='both', which='major', labelsize=8)
+                ax.set_title(x_feature + " VS " + y_feature, fontsize=10)
+                ax.set_xlabel(x_feature)
+                ax.set_ylabel(y_feature)
+                # Reducing the size of the values of the graduated axis
+                ax.tick_params(axis='both', which='major', labelsize=8)
 
             # Hiding empty axes if nbr of plots in the fig / nbr of plots per fig
             for j in range(len(batch), len(axes)):
@@ -93,9 +83,8 @@ class ScatterPlot(BasePlot):
             plt.tight_layout()
             # Leaving space for legend
             plt.subplots_adjust(top=0.93)
-            figures.append(fig)
 
-        plt.show(block=True)
+        plt.show()
 
 
 def main():
