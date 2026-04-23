@@ -13,33 +13,35 @@ def logistic_regression(X, theta, b):
     z = (X @ theta) + b
     return sigmoid(z)
 
-def gradient_descent(X, y, alpha=0.01, num_iter=1000, tol=1e-7):
+def gradient_descent(X, y, alpha=0.01, num_iter=10000, tol=1e-7):
     n_samples, n_features = X.shape
 
-    # one weight per feature
     theta = np.zeros(n_features)
-
-    # bias is a scalar
     b = 0.0
 
     for i in range(num_iter):
-        # forward pass
         y_hat = logistic_regression(X, theta, b)
-
-        # error vector (size: n_samples)
-        error = y - y_hat
-
-        # gradients
+        
+        error = y_hat - y
+        
+        epsilon = 1e-15
+        y_hat_clipped = np.clip(y_hat, epsilon, 1 - epsilon)
+        loss = -np.mean(y * np.log(y_hat_clipped) + (1 - y) * np.log(1 - y_hat_clipped))
+        
+        if (i + 1) % 1000 == 0:
+            print(f"  Iteration {i+1}/{num_iter}, Loss: {loss:.6f}")
+        
         grad_theta = X.T @ error / n_samples
         grad_b = error.sum() / n_samples
 
-        # parameter update (minimizing negative log-likelihood)
         theta -= alpha * grad_theta
         b -= alpha * grad_b
 
-        # optional stopping condition
         if np.linalg.norm(grad_theta) < tol:
+            print(f"  Converged at iteration {i+1}, Loss: {loss:.6f}")
             break
+
+    return theta, b
 
     # print(theta, b)
     return theta, b
@@ -111,12 +113,25 @@ def train(house, data):
 def main():
     houses = ['Ravenclaw', 'Slytherin', 'Gryffindor', 'Hufflepuff']
     data = prepare_data()
+    
+    numeric_columns = data.select_dtypes(include=[np.number]).columns.tolist()
+    norm_params = {}
+    for col in numeric_columns:
+        norm_params[col] = {
+            'mean': float(data[col].mean()),
+            'std': float(data[col].std())
+        }
+    
     normalize_data(data)
     
-    models = {}
+    models = {
+        'normalization': norm_params,
+        'classifiers': {}
+    }
+    
     for house in houses:
         model = train(house, data)
-        models[house] = {
+        models['classifiers'][house] = {
             'theta': model['theta'].tolist(),
             'b': float(model['b']),
             'features': model['features']
