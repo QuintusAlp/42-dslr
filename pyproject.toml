@@ -1,18 +1,20 @@
 [project]
-name = "dslr"
+name = "42-dslr"
 version = "0.1.0"
 description = ""
 authors = [
-    {name = "margauuuuuxx",email = "margaux.loncour@gmail.com"}
+    {name = "quentin",email = "alpesse.q@outlook.fr"}
 ]
 readme = "README.md"
-requires-python = ">=3.11,<3.12"
+requires-python = ">=3.13"
 dependencies = [
-    "pandas (>=2.3.3,<3.0.0)",
+    "numpy (>=2.4.1,<3.0.0)",
+    "pandas (>=3.0.0,<4.0.0)",
     "colorama (>=0.4.6,<0.5.0)",
     "matplotlib (>=3.10.8,<4.0.0)",
-    "seaborn (>=0.13.2,<0.14.0)",
+    "seaborn (>=0.13.2,<0.14.0)"
 ]
+
 
 [tool.poetry.scripts]
 describe = "srcs.v1_data_analysis.describe:main"
@@ -20,8 +22,8 @@ describe_bonus = "srcs.v1_data_analysis.describe:main_bonus"
 histogram = "srcs.v2_data_visualization.histogram:main"
 pair_plot = "srcs.v2_data_visualization.pair_plot:main"
 scatter_plot = "srcs.v2_data_visualization.scatter_plot:main"
+logreg_predict = "srcs.v3_logistic_regression.logreg_predict:main"
 clean = "srcs.scripts.clean:main"
-
 [[tool.poetry.packages]]
 include = "srcs"
 

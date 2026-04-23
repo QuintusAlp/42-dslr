@@ -1,0 +1,134 @@
+{
+  "Ravenclaw": {
+    "theta": [
+      0.4358275109588331,
+      5.830842612060442,
+      -3.648945946138884,
+      -5.8446760412978795,
+      -1.7693494172638218,
+      -7.539699302478464,
+      -4.766476651935815,
+      -2.729914553246522,
+      -2.763694020666983,
+      -2.348368976668612,
+      -0.3244910804855739,
+      -7.49834577524787,
+      1.8912297804080613
+    ],
+    "b": 3.795273384200991,
+    "features": [
+      "Arithmancy",
+      "Astronomy",
+      "Herbology",
+      "Defense Against the Dark Arts",
+      "Divination",
+      "Muggle Studies",
+      "Ancient Runes",
+      "History of Magic",
+      "Transfiguration",
+      "Potions",
+      "Care of Magical Creatures",
+      "Charms",
+      "Flying"
+    ]
+  },
+  "Slytherin": {
+    "theta": [
+      0.33779249279842727,
+      4.707648277559517,
+      3.4200150218542573,
+      -4.711517085945055,
+      6.4936840556379325,
+      0.6008191746635831,
+      2.447136204182073,
+      -2.340583337969615,
+      -2.4087208720431574,
+      -4.737264664032024,
+      0.12584299158161222,
+      1.2036097881886987,
+      3.9163686497884056
+    ],
+    "b": 4.834683274209814,
+    "features": [
+      "Arithmancy",
+      "Astronomy",
+      "Herbology",
+      "Defense Against the Dark Arts",
+      "Divination",
+      "Muggle Studies",
+      "Ancient Runes",
+      "History of Magic",
+      "Transfiguration",
+      "Potions",
+      "Care of Magical Creatures",
+      "Charms",
+      "Flying"
+    ]
+  },
+  "Gryffindor": {
+    "theta": [
+      0.25270115718670416,
+      -4.193366230300159,
+      3.9498519497638496,
+      4.198900287986619,
+      -1.892240103039076,
+      2.627498080265657,
+      -3.149154674959964,
+      6.959793129026823,
+      6.881578868749049,
+      4.284245456996603,
+      0.3149282581069465,
+      4.46715539768573,
+      -6.91915677110997
+    ],
+    "b": 5.0064490528431715,
+    "features": [
+      "Arithmancy",
+      "Astronomy",
+      "Herbology",
+      "Defense Against the Dark Arts",
+      "Divination",
+      "Muggle Studies",
+      "Ancient Runes",
+      "History of Magic",
+      "Transfiguration",
+      "Potions",
+      "Care of Magical Creatures",
+      "Charms",
+      "Flying"
+    ]
+  },
+  "Hufflepuff": {
+    "theta": [
+      -0.16232555965575382,
+      -6.068987102442812,
+      -4.070080050995426,
+      6.077865576153468,
+      -3.0625379359304428,
+      3.891723363719587,
+      5.260921520599459,
+      -2.0370411199199387,
+      -1.8931204334878906,
+      2.517321514559825,
+      -0.1379551143085406,
+      1.2786742244600502,
+      0.9914917686504037
+    ],
+    "b": 2.6577986655217556,
+    "features": [
+      "Arithmancy",
+      "Astronomy",
+      "Herbology",
+      "Defense Against the Dark Arts",
+      "Divination",
+      "Muggle Studies",
+      "Ancient Runes",
+      "History of Magic",
+      "Transfiguration",
+      "Potions",
+      "Care of Magical Creatures",
+      "Charms",
+      "Flying"
+    ]
+  }
+}
