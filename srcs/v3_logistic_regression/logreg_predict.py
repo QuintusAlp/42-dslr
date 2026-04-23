@@ -36,7 +36,7 @@ def load_models(model_file):
 
 def prepare_test_data(csv_file):
     data = pd.read_csv(csv_file)
-    columns_to_drop = ['First Name', 'Last Name', 'Birthday', 'Best Hand']
+    columns_to_drop = ['Index', 'First Name', 'Last Name', 'Birthday', 'Best Hand']
     data = data.drop(columns=columns_to_drop, errors='ignore')
     return data
 
@@ -88,7 +88,10 @@ def main():
     test_data = prepare_test_data(test_file)
     
     numeric_columns = models['classifiers'][list(models['classifiers'].keys())[0]]['features']
-    X = test_data[numeric_columns].fillna(0).values
+    
+    median_values = test_data[numeric_columns].median()
+    test_data.loc[:, numeric_columns] = test_data[numeric_columns].fillna(median_values)
+    test_data.loc[:, numeric_columns] = test_data[numeric_columns].fillna(0.0)
     
     normalize_test_data(test_data, models['normalization'])
     X_normalized = test_data[numeric_columns].values
