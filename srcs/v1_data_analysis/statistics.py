@@ -18,7 +18,6 @@ def compute_variance(values: list, mean: float, count: int) -> float:
     
     return (variance)
 
-# sqrt(sum(x - mean)^2) / (n - 1)
 def compute_standard_deviation(values: list, mean: float, count: int, variance: float) -> float:
     return (math.sqrt(variance))
 
