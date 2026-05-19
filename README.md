@@ -71,8 +71,12 @@ A pair plot visualizes pairwise relationships between all numeric features, crea
 - **Feature Redundancy** - If two features show identical or nearly identical relationships with house, they may be redundant (high multicollinearity), limiting model improvement.
 - **Decision Boundaries** - Visualizes the space the logistic regression model must separate; scattered, overlapped clusters indicate harder classification problems.
 
-![Distinctive pair-plot example](./readme_images/distinctive-pair-plot.png)
-![Unistinctive pair-plot example](./readme_images/undistinctive-pair-plot.png)
+<table>
+  <tr>
+    <td><img src="./readme_images/distinctive-pair-plot.png" width="350" alt="Distinctive pair-plot example" /></td>
+    <td><img src="./readme_images/undistinctive-pair-plot.png" width="350" alt="Undistinctive pair-plot example" /></td>
+  </tr>
+</table>
 
 Example: The first plot (Herbology x Astronomy) shows clear class clustering when the second one (Arithmancy x Care of Magical Creatures) doesn't 
 
@@ -85,6 +89,15 @@ A scatter plot shows the relationship between two features with points colored b
 - **Feature Correlation** - Strong upward or downward trends between features indicate correlation. High correlation with low predictive value suggests feature redundancy.
 - **Outlier Detection** - Isolated points reveal anomalies or data entry errors that may skew model training.
 - **Class Imbalance Visibility** - If one house has far fewer points than others, the dataset is imbalanced and may require resampling techniques.
+
+<table>
+  <tr>
+    <td><img src="./readme_images/discriminative-scatter_plot.png" width="350" alt="Discriminative scatter-plot example" /></td>
+    <td><img src="./readme_images/non-discriminative-scatter_plot.png" width="350" alt="Undiscriminative scatter-plot example" /></td>
+  </tr>
+</table>
+
+Example: Astronomy is a good discriminative feature where Arithmancy isn't. Also note the Astronomy VS Defense Against Dark Arts plot with displays a near perfect negative correlation this implies a strong multicollinearity between the 2 features hence one of the subjects will be removed for the logreg model. 
 
 **Interpretation for Model Building:**
 Together, these visualizations guide feature engineering and hyperparameter tuning. High-quality separability in plots predicts high model accuracy. Dense overlaps suggest the need for feature transformation, polynomial features, or acceptance of lower baseline accuracy.
