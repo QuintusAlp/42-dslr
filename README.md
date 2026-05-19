@@ -58,7 +58,8 @@ A histogram displays the frequency distribution of a single feature across all f
 - **Multimodality** - Multiple peaks within a house distribution suggest subgroups or data quality issues.
 - **Feature Selection** - Features with clear house separation are candidates for inclusion in the model; highly overlapped features contribute less to classification.
 
-Example: If Arithmancy scores for Ravenclaw cluster at 70000+ while other houses are below 40000, Arithmancy is valuable for classification.
+![Histogram example](./readme_images/histogram_example.png)
+Example: Astronomy is a highly discriminative subject and Arithmancy isn't
 
 #### Pair Plot
 
@@ -70,7 +71,10 @@ A pair plot visualizes pairwise relationships between all numeric features, crea
 - **Feature Redundancy** - If two features show identical or nearly identical relationships with house, they may be redundant (high multicollinearity), limiting model improvement.
 - **Decision Boundaries** - Visualizes the space the logistic regression model must separate; scattered, overlapped clusters indicate harder classification problems.
 
-Example: A pair plot showing Transfiguration vs Ancient Runes might reveal that Slytherin students cluster in the upper-left while Gryffindors cluster in the lower-right, making this pair highly predictive.
+![Distinctive pair-plot example](./readme_images/distinctive-pair-plot.png)
+![Unistinctive pair-plot example](./readme_images/undistinctive-pair-plot.png)
+
+Example: The first plot (Herbology x Astronomy) shows clear class clustering when the second one (Arithmancy x Care of Magical Creatures) doesn't 
 
 #### Scatter Plot
 
@@ -81,8 +85,6 @@ A scatter plot shows the relationship between two features with points colored b
 - **Feature Correlation** - Strong upward or downward trends between features indicate correlation. High correlation with low predictive value suggests feature redundancy.
 - **Outlier Detection** - Isolated points reveal anomalies or data entry errors that may skew model training.
 - **Class Imbalance Visibility** - If one house has far fewer points than others, the dataset is imbalanced and may require resampling techniques.
-
-Example: A scatter plot of Defense Against Dark Arts vs Potions might show Gryffindors in the high-defense, low-potions region, enabling the model to learn this boundary.
 
 **Interpretation for Model Building:**
 Together, these visualizations guide feature engineering and hyperparameter tuning. High-quality separability in plots predicts high model accuracy. Dense overlaps suggest the need for feature transformation, polynomial features, or acceptance of lower baseline accuracy.

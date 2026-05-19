@@ -38,9 +38,16 @@ class BasePlot(ABC):
     
     def prepare_data(self, df: pd.DataFrame):
         """Data preparation common for each plot"""
+        if 'Hogwarts House' not in df.columns:
+            raise DataProcessingError("Dataset must contain 'Hogwarts House' column for visualization. Use dataset_train.csv instead of dataset_test.csv")
+        
         cols_to_drop = ['Index', 'First Name', 'Last Name', 'Birthday', 'Best Hand']
         df_filtered = df.drop(columns=cols_to_drop, errors='ignore')
         df_filtered = df_filtered[df_filtered['Hogwarts House'].notna()] # keep only rows where a specific col is not missing
+        
+        if df_filtered.empty:
+            raise DataProcessingError("No rows with valid house assignments found in dataset")
+        
         df_numeric = df_filtered.select_dtypes(include=['number'])
         courses = df_numeric.columns.tolist()
         return (df_filtered, df_numeric, courses)
