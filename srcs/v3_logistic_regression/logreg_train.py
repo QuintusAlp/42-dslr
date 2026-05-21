@@ -51,7 +51,7 @@ def gradient_descent(X, y, alpha=0.01, num_iter=10000, tol=1e-7):
 def prepare_data():
     data = pd.read_csv("./datasets/dataset_train.csv")
     
-    columns_to_drop = ['Index', 'First Name', 'Last Name', 'Birthday', 'Best Hand']
+    columns_to_drop = ['Index', 'First Name', 'Last Name', 'Birthday', 'Best Hand', 'Defense']
     clean_data = data.drop(columns=columns_to_drop, errors='ignore').copy()
 
     if 'Hogwarts House' not in clean_data.columns:
